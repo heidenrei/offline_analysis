@@ -8,6 +8,7 @@ IMG_SIZE = 528
 batch_size = 64
 num_classes = 2
 
+#TODO: need to make an image generator that crops the images to the correct size input for EN around the central point??
 
 class Detector:
     def __init__(self, num_classes):
@@ -47,10 +48,10 @@ class Detector:
         # Compile
         model = keras.Model(inputs, outputs, name="EfficientNet")
         optimizer = keras.optimizers.Adam(learning_rate=1e-2)
+
         model.compile(
-            optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"]
+            optimizer=optimizer, loss="binary_crossentropy", metrics=["binary_accuracy"]
         )
         return model
-
 
 d = Detector(num_classes)
