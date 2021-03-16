@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+*.avi
+*.jpg
+
+/raw_toy
+/labeled_toy
