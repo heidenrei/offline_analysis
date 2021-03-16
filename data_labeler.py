@@ -83,8 +83,6 @@ def prepare_for_training(output_folder):
 
 
 if __name__ == '__main__':
-
-    
     input_folder = 'raw_toy'
     output_folder = 'labeled_toy'
     generate_dataset(input_folder, output_folder)
