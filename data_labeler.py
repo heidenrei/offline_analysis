@@ -38,11 +38,11 @@ def generate_dataset(input_folder, output_folder):
                 img_path = os.path.basename(video_file).replace(".avi", "") + "%d.jpg" % video_stream.get(
                     cv2.CAP_PROP_POS_FRAMES)
                 frame = cv2.resize(frame, (224, 224))
-                if cv2.waitKey(0) == 49:
+                if cv2.waitKey(20) == 49:
                     img_path = os.path.join(output_folder_1, img_path)
                     frame = cv2.resize(frame, (224, 224))
                     cv2.imwrite(img_path, frame)
-                elif cv2.waitKey(0) == 50:
+                elif cv2.waitKey(20) == 50:
                     img_path = os.path.join(output_folder_0, img_path)
                     frame = cv2.resize(frame, (224, 224))
                     cv2.imwrite(img_path, frame)
@@ -84,5 +84,6 @@ def prepare_for_training(output_folder):
 
 if __name__ == '__main__':
     input_folder = 'raw_toy'
-    output_folder = 'labeled_toy'
+    output_folder = 'train_dir'
     generate_dataset(input_folder, output_folder)
+    # prepare_for_training(output_folder)
