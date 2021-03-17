@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 from copy import deepcopy
 from tqdm import tqdm
+import time
 
 def generate_dataset(input_folder, output_folder):
     assert os.path.isdir(input_folder) and os.path.isdir(output_folder)
@@ -84,5 +85,6 @@ def prepare_for_training(output_folder):
 
 if __name__ == '__main__':
     input_folder = 'raw_toy'
-    output_folder = 'labeled_toy'
+    output_folder = 'train_dir'
     generate_dataset(input_folder, output_folder)
+    # prepare_for_training(output_folder)

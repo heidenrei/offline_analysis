@@ -133,3 +133,4 @@ dmypy.json
 
 /raw_toy
 /labeled_toy
+*.h5
