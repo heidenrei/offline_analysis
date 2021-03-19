@@ -146,33 +146,3 @@ if __name__ == '__main__':
         
     # pred = model.predict_generator(test_generator)
     # print(pred)
-    # print(type(pred))
-
-    # score = model.evaluate_generator(generator=validation_generator, steps=1, verbose=1)
-    # print(score)
-    # pred = model.predict_generator(test_generator)[:10]
-    # print(pred)
-    # res = list(zip(test_generator.filenames[:10], pred))
-    # print(res)
-    # print(res[0])
-    # print(res[1])
-    # for r in res:
-    #     fn, pred = r[0], str(r[1][0])
-    #     fn = test_dir + fn
-    #     print(fn)
-    #     img = cv2.imread(fn)
-    #     # img = cv2.putText(img, pred, (20,20), cv2.FONT_HERSHEY_COMPLEX, 1, (255,0,0))
-    #     cv2.imshow('test', img)
-    #     time.sleep(12)
-    # predicted_class_indices = np.argmax(pred, axis=1)
-    # print(f'predicted_class_indices: {predicted_class_indices}')
-    # labels = (train_generator.class_indices)
-    # print(f'labels: {labels}')
-    # labels = dict((k, v) for v, k in labels.items())
-    # predictions = [labels[k] for k in predicted_class_indices]
-
-    # filenames=test_generator.filenames
-    # results=pd.DataFrame({"Filename":filenames, "Predictions":predictions})
-    # print(results)
-    # results.to_csv("results.csv",index=False)
-    # plot1(history)
