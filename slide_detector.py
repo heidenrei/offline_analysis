@@ -149,8 +149,8 @@ def get_pred(img):
     return result < 0.5
 
 if __name__ == '__main__':
-    train = False
-
+    train = True
+    analyze_test = True
 
     # model = model1()
     model = model2()
@@ -171,22 +171,21 @@ if __name__ == '__main__':
         plot2(history)
     
 
+    if analyze_test:
+        pred = model.predict_generator(test_generator)
+        filenames = test_generator.filenames
+        print(pred)
 
-    pred = model.predict_generator(test_generator)
-    filenames = test_generator.filenames
-    print(pred)
+        res = list(zip(filenames, pred))
 
-    res = list(zip(filenames, pred))
+        for r in res:
+            fn = r[0]
+            res = r[1]
+            print(fn, res)
+            print(test_dir + fn)
+            img = Image.open(test_dir + fn)
+            draw = ImageDraw.Draw(img) 
+            draw.text((10, 10), str(res > 0.5), (255, 0, 0)) 
 
-    print(res[:1][0][0])
-    for r in res:
-        fn = r[0]
-        res = r[1]
-        print(fn, res)
-        print(test_dir + fn)
-        img = Image.open(test_dir + fn)
-        draw = ImageDraw.Draw(img) 
-        draw.text((10, 10), str(res > 0.5), (255, 0, 0)) 
-
-        img.show()
-        time.sleep(5)
+            img.show()
+            time.sleep(5)
