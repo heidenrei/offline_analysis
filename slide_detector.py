@@ -28,10 +28,13 @@ batch_size = 16
 
 width = 224
 height = 224
-epochs = 200
+epochs = 20
 NUM_TRAIN = len(os.listdir(train_dir + '1')) + len(os.listdir(train_dir + '0'))
 NUM_TEST = len(os.listdir(test_dir + 'predict'))
 NUM_VAL = len(os.listdir(validation_dir + '1')) + len(os.listdir(validation_dir + '0'))
+
+callbacks_list = []
+callbacks_list.append(callbacks.ModelCheckpoint("model/model.h5", save_best_only=True))
 
 print(NUM_TRAIN, NUM_TEST, NUM_VAL)
 
@@ -133,11 +136,10 @@ if __name__ == '__main__':
         train_generator,
         #steps_per_epoch= NUM_TRAIN //batch_size,
         epochs=epochs,
+        callbacks=callbacks_list,
         validation_data=validation_generator,
         #validation_steps= NUM_VAL // batch_size,
         verbose=1,
-        #use_multiprocessing=True,
-        #workers=4
         )
 
     print(history.history.keys())
