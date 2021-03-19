@@ -29,7 +29,7 @@ validation_dir = '/home/' + os.getlogin() + '/offline_analysis/data/valid/'
 test_dir = '/home/' + os.getlogin() + '/offline_analysis/data/test/'
 
 weights_path = '/home/' + os.getlogin() + '/offanalysis/model/model.h5'
-
+load_from_weights_path = False
 batch_size = 16
 
 width = 224
@@ -114,7 +114,7 @@ def model2():
 
     efficient_net.trainable = False
 
-    if weights:
+    if load_from_weights_path and weights:
         model.load_weights(weights)
 
     model.compile(optimizer=optimizers.Adam(lr=0.0001), loss='binary_crossentropy', metrics=['binary_accuracy'])
