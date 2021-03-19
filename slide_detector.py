@@ -140,13 +140,13 @@ def plot2(history):
 
     plt.show()
 
-    def get_pred(img):
-        predict_image = np.asarray([cv2.resize(img, (224, 224))])
-        # redict_image = predict_image / 255.
-        result = model.predict(predict_image)[0]
+def get_pred(img):
+    predict_image = np.asarray([cv2.resize(img, (224, 224))])
+    # redict_image = predict_image / 255.
+    result = model.predict(predict_image)[0]
 
-        print(result)
-        return result < 0.5
+    print(result)
+    return result < 0.5
 
 if __name__ == '__main__':
     train = False
