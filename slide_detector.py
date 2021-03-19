@@ -19,10 +19,14 @@ import pandas as pd
 import time
 
 import cv2
+from PIL import Image
+from PIL import ImageDraw 
 
 train_dir = '/home/gavin/offline_analysis/data/train/'
 validation_dir = '/home/gavin/offline_analysis/data/valid/'
 test_dir = '/home/gavin/offline_analysis/data/test/'
+
+weights_path = '/home/gavin/offline_analysis/model/model.h5'
 
 batch_size = 16
 
@@ -35,6 +39,10 @@ NUM_VAL = len(os.listdir(validation_dir + '1')) + len(os.listdir(validation_dir 
 
 callbacks_list = []
 callbacks_list.append(callbacks.ModelCheckpoint("model/model.h5", save_best_only=True))
+
+weights = None
+if os.path.exists(weights_path):
+    weights = weights_path
 
 print(NUM_TRAIN, NUM_TEST, NUM_VAL)
 
@@ -104,6 +112,9 @@ def model2():
 
     efficient_net.trainable = False
 
+    if weights:
+        model.load_weights(weights)
+
     model.compile(optimizer=optimizers.Adam(lr=0.0001), loss='binary_crossentropy', metrics=['binary_accuracy'])
     return model
 
@@ -129,22 +140,53 @@ def plot2(history):
 
     plt.show()
 
+    def get_pred(img):
+        predict_image = np.asarray([cv2.resize(img, (224, 224))])
+        # redict_image = predict_image / 255.
+        result = model.predict(predict_image)[0]
+
+        print(result)
+        return result < 0.5
+
 if __name__ == '__main__':
+    train = False
+
+
     # model = model1()
     model = model2()
-    history = model.fit(
-        train_generator,
-        #steps_per_epoch= NUM_TRAIN //batch_size,
-        epochs=epochs,
-        callbacks=callbacks_list,
-        validation_data=validation_generator,
-        #validation_steps= NUM_VAL // batch_size,
-        verbose=1,
-        )
 
-    print(history.history.keys())
+    if train:
+        history = model.fit(
+            train_generator,
+            #steps_per_epoch= NUM_TRAIN //batch_size,
+            epochs=epochs,
+            callbacks=callbacks_list,
+            validation_data=validation_generator,
+            #validation_steps= NUM_VAL // batch_size,
+            verbose=1,
+            )
 
-    plot2(history)
-        
-    # pred = model.predict_generator(test_generator)
-    # print(pred)
+        print(history.history.keys())
+
+        plot2(history)
+    
+
+
+    pred = model.predict_generator(test_generator)
+    filenames = test_generator.filenames
+    print(pred)
+
+    res = list(zip(filenames, pred))
+
+    print(res[:1][0][0])
+    for r in res:
+        fn = r[0]
+        res = r[1]
+        print(fn, res)
+        print(test_dir + fn)
+        img = Image.open(test_dir + fn)
+        draw = ImageDraw.Draw(img) 
+        draw.text((10, 10), str(res > 0.5), (255, 0, 0)) 
+
+        img.show()
+        time.sleep(5)
