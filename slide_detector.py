@@ -22,17 +22,19 @@ import cv2
 from PIL import Image
 from PIL import ImageDraw 
 
-train_dir = '/home/gavin/offline_analysis/data/train/'
-validation_dir = '/home/gavin/offline_analysis/data/valid/'
-test_dir = '/home/gavin/offline_analysis/data/test/'
 
-weights_path = '/home/gavin/offline_analysis/model/model.h5'
+
+train_dir = '/home/' + os.getlogin() + '/offline_analysis/data/train/'
+validation_dir = '/home/' + os.getlogin() + '/offline_analysis/data/valid/'
+test_dir = '/home/' + os.getlogin() + '/offline_analysis/data/test/'
+
+weights_path = '/home/' + os.getlogin() + '/offanalysis/model/model.h5'
 
 batch_size = 16
 
 width = 224
 height = 224
-epochs = 20
+epochs = 10
 NUM_TRAIN = len(os.listdir(train_dir + '1')) + len(os.listdir(train_dir + '0'))
 NUM_TEST = len(os.listdir(test_dir + 'predict'))
 NUM_VAL = len(os.listdir(validation_dir + '1')) + len(os.listdir(validation_dir + '0'))
@@ -150,7 +152,7 @@ def get_pred(img):
 
 if __name__ == '__main__':
     train = True
-    analyze_test = True
+    analyze_test = False
 
     # model = model1()
     model = model2()
