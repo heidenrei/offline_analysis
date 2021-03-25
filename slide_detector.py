@@ -1,3 +1,9 @@
+"""
+    Author: Gavin Heidenreich
+    Email: gheidenr@uottawa.ca
+    Organization: University of Ottawa (Silasi Lab)
+"""
+
 from warnings import simplefilter 
 simplefilter(action='ignore', category=FutureWarning)
 simplefilter(action='ignore', category=UserWarning)
